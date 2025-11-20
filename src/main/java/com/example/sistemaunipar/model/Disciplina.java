@@ -1,5 +1,5 @@
 package com.example.sistemaunipar.model;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +10,7 @@ public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "ID gerado automatics, não precisa colocar nada, idiota")
     private Long id;
 
     @ManyToOne(optional = false)

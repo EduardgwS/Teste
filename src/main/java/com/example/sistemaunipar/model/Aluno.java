@@ -1,5 +1,5 @@
 package com.example.sistemaunipar.model;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,12 +11,13 @@ public class Aluno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY, description = "ID gerado automatics, não precisa colocar nada, idiota")
     private Long id;
 
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 14) //É bom pra n colocar CPF inválido igual IDIOTA
     private String cpf;
 
     @Column(nullable = false)

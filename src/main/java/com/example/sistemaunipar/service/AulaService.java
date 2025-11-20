@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AulaService {
@@ -32,15 +33,21 @@ public class AulaService {
     /**
      * Cria uma aula associada à disciplina informada.
      */
+    @Transactional
     public AulasDadas criarAula(Long idDisciplina, AulasDadas dados) {
         Disciplina d = disciplinaRepo.findById(idDisciplina)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Disciplina não encontrada"));
+
+        if (dados.getData() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data da aula é obrigatória");
+        }
+
         dados.setDisciplina(d);
         return aulasRepo.save(dados);
     }
 
     /**
-     * Recebe uma lista de PresencaDTO e cria os registros de presença/falta para a aula informada.
+     * Recebe uma lista de PresencaDTO e cria/atualiza os registros de presença/falta para a aula informada.
      */
     @Transactional
     public List<AulasDadasPresencas> registrarPresencas(Long idAulaDada, List<PresencaDTO> lista) {
@@ -48,18 +55,34 @@ public class AulaService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aula não encontrada"));
 
         List<AulasDadasPresencas> salvas = new ArrayList<>();
+
         for (PresencaDTO p : lista) {
+            if (p.alunoId == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "alunoId não pode ser nulo");
+            }
+
             Aluno aluno = alunoRepo.findById(p.alunoId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno não encontrado: " + p.alunoId));
 
-            // opcional: checar se já existe registro para essa aula+aluno e atualizar em vez de duplicar
-            // aqui fazemos insert simples (poderia verificar e usar save/update)
-            AulasDadasPresencas presenca = new AulasDadasPresencas();
-            presenca.setAulaDada(aula);
-            presenca.setAluno(aluno);
-            presenca.setFalta(Boolean.TRUE.equals(p.falta)); // evita nulls
+            // Busca se já existe registro para essa aula+aluno
+            Optional<AulasDadasPresencas> existente = presencasRepo.findByAulaDadaIdAndAlunoId(idAulaDada, p.alunoId);
+
+            AulasDadasPresencas presenca;
+            if (existente.isPresent()) {
+                // Atualiza registro existente
+                presenca = existente.get();
+                presenca.setFalta(Boolean.TRUE.equals(p.falta));
+            } else {
+                // Cria novo registro
+                presenca = new AulasDadasPresencas();
+                presenca.setAulaDada(aula);
+                presenca.setAluno(aluno);
+                presenca.setFalta(Boolean.TRUE.equals(p.falta));
+            }
+
             salvas.add(presencasRepo.save(presenca));
         }
+
         return salvas;
     }
 }
