@@ -1,0 +1,45 @@
+.card {
+    background: white;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04)
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    align-items: center
+}
+
+.grid label {
+    font-size: 13px;
+    color: #333
+}
+
+.grid input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px
+}
+
+.actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px
+}
+
+.primary {
+    background: #c62828;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer
+}
+
+@media(max-width:900px) {
+    .grid {
+        grid-template-columns: 1fr
+    }
+}

@@ -1,0 +1,81 @@
+<div *ngIf="disciplina">
+  <h2>Disciplina: {{ disciplina.nome }} — Professor: {{ disciplina.professor.nome }}</h2>
+</div>
+
+<div *ngIf="lancamentos.length === 0">
+  <h3>Nenhum aluno matriculado nesta disciplina.</h3>
+</div>
+
+<table class="table" *ngIf="lancamentos.length > 0">
+  <thead>
+    <tr>
+      <th>RA</th>
+      <th>Aluno</th>
+      <th>Nota 1º Bim</th>
+      <th>Faltas 1º</th>
+      <th>Nota 2º Bim</th>
+      <th>Faltas 2º</th>
+      <th>Média</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let l of lancamentos">
+      <td>{{ l.aluno.ra }}</td>
+      <td>{{ l.aluno.nome }}</td>
+
+      <td>
+        <input type="number" min="0" max="10"
+               [(ngModel)]="l.notas.bimestre1"
+               (input)="atualizarMedia(l)">
+      </td>
+
+      <td>
+        {{ contarFaltas(l, 1) }}
+        <button (click)="l.showFaltas1 = !l.showFaltas1">Editar</button>
+      </td>
+
+      <td>
+        <input type="number" min="0" max="10"
+               [(ngModel)]="l.notas.bimestre2"
+               (input)="atualizarMedia(l)">
+      </td>
+
+      <td>
+        {{ contarFaltas(l, 2) }}
+        <button (click)="l.showFaltas2 = !l.showFaltas2">Editar</button>
+      </td>
+
+      <td>{{ l.mediaFinal | number:'1.2-2' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button *ngIf="lancamentos.length > 0"
+        class="primary"
+        (click)="salvar()">
+  Salvar Lançamentos
+</button>
+
+<!-- FALTAS POR DIA -->
+<div *ngFor="let l of lancamentos" style="margin-top: 15px;">
+
+  <div *ngIf="l.showFaltas1">
+    <h3>Faltas - 1º Bimestre - {{ l.aluno.nome }}</h3>
+    <div class="faltas-grid">
+      <label *ngFor="let f of l.faltas.bimestre1">
+        <input type="checkbox" [(ngModel)]="f.falta"> {{ f.dia }}
+      </label>
+    </div>
+  </div>
+
+  <div *ngIf="l.showFaltas2">
+    <h3>Faltas - 2º Bimestre - {{ l.aluno.nome }}</h3>
+    <div class="faltas-grid">
+      <label *ngFor="let f of l.faltas.bimestre2">
+        <input type="checkbox" [(ngModel)]="f.falta"> {{ f.dia }}
+      </label>
+    </div>
+  </div>
+
+</div>

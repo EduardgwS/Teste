@@ -1,0 +1,24 @@
+<h2>Matrículas</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Aluno</th>
+      <th *ngFor="let d of disciplinas">{{ d.nome }}</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let a of alunos">
+      <td>{{ a.nome }}</td>
+
+      <td *ngFor="let d of disciplinas">
+        <input type="checkbox"
+               [checked]="verifica(a.ra, d.codigo)"
+               (change)="toggleMatricula(a.ra, d.codigo)">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="primary" (click)="salvar()">Salvar Matrículas</button>

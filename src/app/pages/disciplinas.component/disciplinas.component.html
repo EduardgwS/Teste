@@ -1,0 +1,38 @@
+<div class="card">
+  <h3>Adicionar Disciplina</h3>
+  <div class="grid">
+    <label>Código</label><input type="number" [(ngModel)]="form.codigo" />
+    <label>Nome</label><input [(ngModel)]="form.nome" />
+    <label>Curso</label><input [(ngModel)]="form.curso" />
+  </div>
+  <br>
+  <div class="actions">
+    <button class="primary" (click)="adicionar()">Adicionar</button>
+  </div>
+</div>
+
+<table class="table" *ngIf="disciplinas.length>0">
+  <thead><tr><th>Código</th><th>Nome</th><th>Curso</th><th>Ações</th></tr></thead>
+  <tbody>
+    <tr *ngFor="let d of disciplinas">
+      <td>{{ d.codigo }}</td>
+      <td>{{ d.nome }}</td>
+      <td>{{ d.curso }}</td>
+      <td class="actions">
+        <button (click)="abrirLancamentos(d)">Lançar Notas</button>
+        <button (click)="selecionarParaEdicao(d)">Editar</button>
+        <button class="danger" (click)="remover(d.codigo)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="editando" class="card" style="margin-top:12px">
+  <h3>Editar Disciplina</h3>
+  <label>Nome</label><input [(ngModel)]="formEdicao.nome"/>
+  <label>Curso</label><input [(ngModel)]="formEdicao.curso"/>
+  <div class="actions">
+    <button (click)="salvarEdicao()" class="primary">Salvar</button>
+    <button (click)="cancelar()">Cancelar</button>
+  </div>
+</div>

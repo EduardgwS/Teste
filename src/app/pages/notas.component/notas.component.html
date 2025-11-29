@@ -1,0 +1,36 @@
+<h2>Lançamento Geral de Notas</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Aluno</th>
+      <th *ngFor="let d of disciplinas">{{ d.nome }}</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let a of alunos">
+      <td>{{ a.nome }}</td>
+
+      <td *ngFor="let d of disciplinas">
+        <ng-container *ngIf="getLancamento(a.ra, d.codigo) as lanc">
+          <div>
+            <label>1º:</label>
+            <input type="number" min="0" max="10"
+                   [(ngModel)]="lanc.notas.bimestre1"
+                   (input)="atualizarMedia(lanc)">
+          </div>
+
+          <div>
+            <label>2º:</label>
+            <input type="number" min="0" max="10"
+                   [(ngModel)]="lanc.notas.bimestre2"
+                   (input)="atualizarMedia(lanc)">
+          </div>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="primary" (click)="salvar()">Salvar Notas</button>

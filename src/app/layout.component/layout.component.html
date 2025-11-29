@@ -1,0 +1,46 @@
+<div class="layout">
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      🎓
+      <h2>Sistema Acadêmico</h2>
+    </div>
+
+    <nav class="menu">
+
+      <a routerLink="/disciplinas" routerLinkActive="active">
+        📚 Disciplinas
+      </a>
+
+      <a routerLink="/lancamentos" routerLinkActive="active">
+        📝 Lançamentos
+      </a>
+
+      <a routerLink="/alunos" routerLinkActive="active">
+        🎓 Alunos
+      </a>
+
+      <a routerLink="/professores" routerLinkActive="active">
+        👨‍🏫 Professores
+      </a>
+
+      <a routerLink="/boletim" routerLinkActive="active">
+        📊 Boletim
+      </a>
+
+    </nav>
+
+    <footer class="versao">
+      Versão: 1.0
+    </footer>
+
+  </aside>
+
+  <!-- ÁREA PRINCIPAL -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

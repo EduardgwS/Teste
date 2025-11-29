@@ -1,0 +1,42 @@
+<h2>Boletim</h2>
+
+<label>Selecione o aluno:</label>
+<select [(ngModel)]="alunoSelecionado" (change)="carregarBoletim()">
+  <option [ngValue]="null">-- Escolha --</option>
+  <option *ngFor="let a of alunos" [ngValue]="a">
+    {{ a.nome }}
+  </option>
+</select>
+
+<div *ngIf="boletim.length > 0" class="tabela-container">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Disciplina</th>
+        <th>Nota 1º</th>
+        <th>Nota 2º</th>
+        <th>Média</th>
+        <th>Faltas</th>
+        <th>Situação</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let l of boletim">
+        <td>{{ l.disciplina.nome }}</td>
+        <td>{{ l.notas.bimestre1 }}</td>
+        <td>{{ l.notas.bimestre2 }}</td>
+        <td>{{ media(l) }}</td>
+        <td>{{ faltasTotal(l) }}</td>
+        <td [ngClass]="status(l)">
+          {{ status(l) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="alunoSelecionado && boletim.length === 0" class="nenhum">
+  Nenhuma disciplina encontrada para este aluno.
+</div>

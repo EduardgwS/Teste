@@ -1,0 +1,28 @@
+<div class="card">
+  <h3>Cadastrar Novo Aluno</h3>
+  <div class="grid">
+    <label>Nome Completo *</label>
+    <input [(ngModel)]="form.nome" />
+    <label>CPF</label>
+    <input [(ngModel)]="form.cpf" />
+    <label>RA *</label>
+    <input [(ngModel)]="form.ra" />
+    <label>Ano de Ingresso</label>
+    <input type="number" [(ngModel)]="form.anoIngresso" />
+    <label>Período Atual</label>
+    <input [(ngModel)]="form.periodoAtual" />
+  </div>
+
+  <div class="actions">
+    <button class="primary" (click)="adicionar()">Cadastrar Aluno</button>
+    <button (click)="limpar()">Limpar</button>
+  </div>
+</div>
+
+<div style="margin-top:18px">
+  <h4>Alunos cadastrados</h4>
+  <div *ngIf="alunos.length === 0">Nenhum aluno cadastrado.</div>
+  <ul>
+    <li *ngFor="let a of alunos">{{ a.ra }} — {{ a.nome }}</li>
+  </ul>
+</div>

@@ -1,0 +1,61 @@
+/* reuse card/grid styles */
+.card {
+    background: white;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    margin-bottom: 12px
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px
+}
+
+.grid input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse
+}
+
+.table th,
+.table td {
+    border: 1px solid #eee;
+    padding: 8px;
+    text-align: left
+}
+
+.actions {
+    display: flex;
+    gap: 8px
+}
+
+.primary {
+    background: #c62828;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer
+}
+
+.danger {
+    background: #c0392b;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer
+}
+
+@media(max-width:900px) {
+    .grid {
+        grid-template-columns: 1fr
+    }
+}

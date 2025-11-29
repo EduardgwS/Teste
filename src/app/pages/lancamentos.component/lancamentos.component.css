@@ -1,0 +1,28 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px
+}
+
+.table th,
+.table td {
+    border: 1px solid #eee;
+    padding: 8px;
+    text-align: left
+}
+
+.primary {
+    background: #c62828;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer
+}
+
+.faltas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 6px;
+    margin-top: 8px
+}

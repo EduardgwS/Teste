@@ -1,0 +1,18 @@
+<div class="card">
+  <h3>Cadastrar Professor</h3>
+  <div class="grid">
+    <label>Nome</label><input [(ngModel)]="form.nome" />
+    <label>CPF</label><input [(ngModel)]="form.cpf" />
+    <label>Matrícula</label><input [(ngModel)]="form.matricula" />
+    <label>Data Admissão</label><input type="date" [(ngModel)]="form.dtAdmissao" />
+  </div>
+  <div class="actions">
+    <button class="primary" (click)="adicionar()">Adicionar</button>
+  </div>
+</div>
+
+<div style="margin-top:18px">
+  <h4>Professores</h4>
+  <div *ngIf="professores.length === 0">Nenhum professor cadastrado.</div>
+  <ul><li *ngFor="let p of professores">{{ p.matricula }} — {{ p.nome }}</li></ul>
+</div>
